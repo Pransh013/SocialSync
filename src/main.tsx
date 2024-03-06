@@ -5,12 +5,17 @@ import appRouter from "./App.tsx";
 import { ThemeProvider } from "./components/ThemeProvider.tsx";
 import "./index.css";
 import { Toaster } from "@/components/ui/toaster";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <Toaster/>
-      <RouterProvider router={appRouter} />
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <Toaster />
+        <RouterProvider router={appRouter} />
+      </ThemeProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 );

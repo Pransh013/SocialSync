@@ -5,14 +5,16 @@ import Home from "./pages/Home";
 import Signin from "./components/Signin";
 import Signup from "./components/Signup";
 import Auth from "./pages/Auth";
-
+import AuthProvider from "./contexts/AuthContext";
 
 const App = () => {
   return (
     <>
-      <Header />
-      <Outlet />
-      <Footer />
+      <AuthProvider>
+        <Header />
+        <Outlet />
+        <Footer />
+      </AuthProvider>
     </>
   );
 };

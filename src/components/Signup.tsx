@@ -14,13 +14,25 @@ import { Input } from "@/components/ui/input";
 import { signupSchema } from "@/lib/validations/main";
 import Logo from "../assets/Logo.png";
 import Loader from "./Loader";
-import { Link } from "react-router-dom";
-import { createUserAccount } from "@/lib/appwrite/api";
+import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
+import {
+  useCreateUserAccount,
+  useSignInAccount,
+} from "@/lib/react-query/queriesAndMutations";
+import { useUserContext } from "@/contexts/AuthContext";
 
 const Signup = () => {
-  const isLoading = false;
   const { toast } = useToast();
+  const navigate = useNavigate();
+  const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
+
+  const { mutateAsync: createUserAccount, isPending: isCreatingUser } =
+    useCreateUserAccount();
+
+  const { mutateAsync: signInAccount, isPending: isSigningIn } =
+    useSignInAccount();
+
   const form = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
@@ -34,7 +46,31 @@ const Signup = () => {
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof signupSchema>) {
     const newUser = await createUserAccount(values);
-    console.log(newUser);
+    if (!newUser) {
+      return toast({
+        title: "Sign up failed. Please try again",
+      });
+    }
+
+    const session = await signInAccount({
+      email: values.email,
+      password: values.password,
+    });
+    if (!session) {
+      return toast({
+        title: "Sign up failed. Please try again",
+      });
+    }
+
+    const isLoggedIn = await checkAuthUser();
+    if (isLoggedIn) {
+      form.reset();
+      navigate("/");
+    } else {
+      return toast({
+        title: "Sign up failed. Please try again",
+      });
+    }
   }
 
   return (
@@ -65,7 +101,7 @@ const Signup = () => {
                       type="text"
                       placeholder="Enter your fullname"
                       {...field}
-                      className="bg-primary-foreground text-lg"
+                      className="bg-primary-foreground text-primary-foreground text-lg"
                     />
                   </FormControl>
                   <FormMessage />
@@ -85,7 +121,7 @@ const Signup = () => {
                       type="text"
                       placeholder="Enter your username"
                       {...field}
-                      className="bg-primary-foreground text-lg"
+                      className="bg-primary-foreground text-primary text-lg"
                     />
                   </FormControl>
                   <FormMessage />
@@ -105,7 +141,7 @@ const Signup = () => {
                       type="email"
                       placeholder="Enter your email"
                       {...field}
-                      className="bg-primary-foreground text-lg "
+                      className="bg-primary-foreground text-primary text-lg "
                     />
                   </FormControl>
                   <FormMessage />
@@ -125,7 +161,7 @@ const Signup = () => {
                       type="password"
                       placeholder="Enter your password"
                       {...field}
-                      className="bg-primary-foreground text-lg"
+                      className="bg-primary-foreground text-primary text-lg"
                     />
                   </FormControl>
                   <FormMessage />
@@ -133,7 +169,7 @@ const Signup = () => {
               )}
             />
             <Button type="submit" className="text-lg font-semibold mt-3">
-              {isLoading ? <Loader /> : "Sign up..."}
+              {isCreatingUser ? <Loader /> : "Sign up..."}
             </Button>
             <p>
               Already have an account?
