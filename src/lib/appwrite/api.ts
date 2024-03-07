@@ -58,9 +58,18 @@ export const signInAccount = async (user: SignInUser) => {
   }
 };
 
-export const getCurrentUser = async () => {
+export async function getAccount() {
   try {
     const currentAccount = await account.get();
+    return currentAccount;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const getCurrentUser = async () => {
+  try {
+    const currentAccount = await getAccount();
     if (!currentAccount) throw Error;
     const currentUser = await databases.listDocuments(
       appwriteConfig.databaseId,
@@ -72,5 +81,6 @@ export const getCurrentUser = async () => {
     return currentUser.documents[0];
   } catch (error) {
     console.log(error);
+    return null;
   }
 };
