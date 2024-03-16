@@ -21,24 +21,24 @@ const LeftSidebar = () => {
     }
   }, [isSuccess]);
   return (
-    <div className="w-1/4 min-w-64 bg-primary hidden sm:flex py-10">
-      <div className="flex flex-col gap-10 w-9/10 mx-auto">
+    <div className="w-1/4 min-w-60 bg-primary hidden sm:flex py-14">
+      <div className="flex flex-col gap-12 w-9/10 mx-auto">
         <Link to={"/"}>
           <Logo width={"w-9"} text={"text-2xl"} />
         </Link>
-        <div className="flex items-center gap-4">
-          <Link to={`/profile/${user.id}`}>
+        <Link to={`/profile/${user.id}`}>
+          <div className="flex items-center gap-4">
             <UserAvatar
               area={"w-12 h-12"}
               fallback={user.name}
               imageUrl={user.imageUrl}
             />
-          </Link>
-          <div>
-            <p className="text-lg font-semibold">{user.name}</p>
-            <p className="text-sm text-[#ffffffa5]">@{user.username}</p>
+            <div>
+              <p className="text-lg font-semibold">{user.name}</p>
+              <p className="text-sm text-[#ffffffb6]">@{user.username}</p>
+            </div>
           </div>
-        </div>
+        </Link>
         <div className="flex flex-col gap-4">
           {sidebarLinks.map((item: Navlinks) => {
             const isActive = location.pathname === item.route;
@@ -51,7 +51,7 @@ const LeftSidebar = () => {
                       isActive
                         ? "bg-primary-foreground hover:bg-primary-foreground"
                         : "hover:bg-primary-foreground"
-                    } text-primary justify-start items-center`}
+                    } text-primary justify-start items-center transition-all duration-300 ease-in`}
                   >
                     <img
                       src={item.imgURL}
@@ -60,14 +60,14 @@ const LeftSidebar = () => {
                         isActive
                           ? "hue-rotate-[95deg] group-hover:hue-rotate-[95deg]"
                           : "brightness-200 group-hover:hue-rotate-[95deg] group-hover:brightness-90"
-                      }`}
+                      } transition-all duration-300 ease-in`}
                     />
                     <p
-                      className={`${
+                      className={`text-[16px] ${
                         isActive
                           ? "text-primary group-hover:text-primary"
                           : "text-white group-hover:text-primary"
-                      }`}
+                      } transition-all duration-300 ease-in`}
                     >
                       {item.label}
                     </p>
@@ -79,7 +79,7 @@ const LeftSidebar = () => {
         </div>
         <Button
           variant={"ghost"}
-          className="flex justify-start w-28 items-center gap-2"
+          className="flex mt-16 justify-start w-28 items-center gap-2 transition-all duration-500 ease-in"
           onClick={() => handleSignout()}
         >
           <p className="font-bold hidden sm:flex">Logout</p>

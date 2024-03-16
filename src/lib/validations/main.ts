@@ -19,3 +19,5 @@ export const signinSchema = z.object({
     .string()
     .min(6, { message: "password must be at least 8 characters long" }),
 });
+
+export const postSchema = z.object({});
