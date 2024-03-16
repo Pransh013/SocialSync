@@ -41,24 +41,22 @@ const Signin = () => {
       password: values.password,
     });
 
-    console.log(session);
-    
-
     if (!session) {
       return toast({
-        title: "Sign up failed. Please try again",
+        variant: "destructive",
+        title: "User not found, please sign up first",
       });
     }
 
     const isLoggedIn = await checkAuthUser();
     console.log(isLoggedIn);
-    
+
     if (isLoggedIn) {
       form.reset();
       navigate("/");
     } else {
       return toast({
-        title: "Sign up failed. Please try again",
+        title: "Sign in failed. Please try again",
       });
     }
   }

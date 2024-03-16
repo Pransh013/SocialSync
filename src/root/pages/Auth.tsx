@@ -1,5 +1,5 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import Login from "../assets/Login.png";
+import Login from "../../assets/Login.png";
 
 const Auth = () => {
   const isAuthenticated = false;

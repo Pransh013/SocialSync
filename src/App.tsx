@@ -1,48 +1,27 @@
-import { Outlet, createBrowserRouter } from "react-router-dom";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import Home from "./pages/Home";
+import { Route, Routes } from "react-router-dom";
+import Home from "./root/pages/Home";
 import Signin from "./components/Signin";
 import Signup from "./components/Signup";
-import Auth from "./pages/Auth";
-import AuthProvider from "./contexts/AuthContext";
+import Auth from "./root/pages/Auth";
+import RootLayout from "./root/RootLayout";
 
 const App = () => {
   return (
-    <>
-      <AuthProvider>
-        <Header />
-        <Outlet />
-        <Footer />
-      </AuthProvider>
-    </>
+    <main className="flex h-screen">
+      <Routes>
+        {/* public routes */}
+        <Route element={<Auth />}>
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/signup" element={<Signup />} />
+        </Route>
+
+        {/* private routes */}
+        <Route element={<RootLayout />}>
+          <Route index element={<Home />} />
+        </Route>
+      </Routes>
+    </main>
   );
 };
 
-const appRouter = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-    children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
-    ],
-  },
-  {
-    element: <Auth />,
-    children: [
-      {
-        path: "/signin",
-        element: <Signin />,
-      },
-      {
-        path: "/signup",
-        element: <Signup />,
-      },
-    ],
-  },
-]);
-
-export default appRouter;
+export default App;
