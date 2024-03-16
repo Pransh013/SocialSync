@@ -27,3 +27,9 @@ export type User = {
   imageUrl: string;
   bio: string;
 };
+
+export type Navlinks = {
+  imgURL: string;
+  route: string;
+  label: string;
+};

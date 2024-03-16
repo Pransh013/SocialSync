@@ -12,12 +12,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { signinSchema } from "@/lib/validations/main";
-import Logo from "../assets/Logo.png";
 import Loader from "./Loader";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import { useSignInAccount } from "@/lib/react-query/queriesAndMutations";
 import { useUserContext } from "@/contexts/AuthContext";
+import Logo from "./Logo";
 
 const Signin = () => {
   const { toast } = useToast();
@@ -65,12 +65,7 @@ const Signin = () => {
     <>
       <Form {...form}>
         <div className="flex flex-col gap-8">
-          <div className="flex items-center gap-5 sm:gap-8">
-            <img src={Logo} alt="logo" className="w-10 dark:invert " />
-            <p className="text-4xl sm:text-5xl font-semibold sm:font-bold tracking-wide">
-              SocialSync
-            </p>
-          </div>
+          <Logo width={"w-10"} text={"text-4xl md:text-5xl"} />
           <p className="text-center text-2xl font-semibold tracking-wide">
             Sign-in to your account
           </p>
