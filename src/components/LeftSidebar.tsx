@@ -34,7 +34,7 @@ const LeftSidebar = () => {
               imageUrl={user.imageUrl}
             />
             <div>
-              <p className="text-lg font-semibold">{user.name}</p>
+              <p className="text-lg font-semibold text-white">{user.name}</p>
               <p className="text-sm text-[#ffffffb6]">@{user.username}</p>
             </div>
           </div>
@@ -82,8 +82,8 @@ const LeftSidebar = () => {
           className="flex mt-16 justify-start w-28 items-center gap-2 transition-all duration-500 ease-in"
           onClick={() => handleSignout()}
         >
-          <p className="font-bold hidden sm:flex">Logout</p>
-          <LogOut />
+          <p className="font-bold hidden sm:flex text-white">Logout</p>
+          <LogOut className="text-white"/>
         </Button>
       </div>
     </div>

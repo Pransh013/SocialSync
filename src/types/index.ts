@@ -1,3 +1,5 @@
+import { Models } from "appwrite";
+
 export type NewUser = {
   name: string;
   username: string;
@@ -32,4 +34,21 @@ export type Navlinks = {
   imgURL: string;
   route: string;
   label: string;
+};
+
+export type FileUploaderProps = {
+  fieldChange: (FILES: File[]) => void;
+  mediaUrl: string;
+};
+
+export type PostProps = {
+  post?: Models.Document;
+};
+
+export type NewPost = {
+  userId: string;
+  caption: string;
+  file: File[];
+  location?: string;
+  tags?: string;
 };

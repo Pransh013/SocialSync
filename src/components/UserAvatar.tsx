@@ -12,12 +12,12 @@ function UserAvatar({
   const nameArr = fallback?.split(" ");
   let initials = nameArr[0]?.charAt(0) + nameArr[1]?.charAt(0);
   if (imageUrl.includes("appwrite")) imageUrl = "";
-  if(!initials) initials = "U";
+  if (!initials) initials = "U";
   return (
-    <Avatar className={`${area}`}>
+    <Avatar className={` ${area}`}>
       <AvatarImage src={imageUrl} alt="user" />
-      <AvatarFallback className="text-white font-semibold">
-        {initials} 
+      <AvatarFallback className="bg-muted text-primary dark:text-white font-semibold">
+        {initials}
       </AvatarFallback>
     </Avatar>
   );

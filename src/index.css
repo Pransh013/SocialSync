@@ -1,9 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@100..900&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
 
 @layer base {
   :root {
@@ -52,7 +51,6 @@
   }
 }
 
- 
 @layer base {
   * {
     @apply border-border;
@@ -66,20 +64,20 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-    width: 3px;
-    height: 3px;
-    border-radius: 2px;
-  }
+  width: 5px;
+  border-radius: 2px;
+}
 
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: #09090a;
-  }
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #09090a;
+  border-radius: 2px;
+}
 
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #5c5c7b;
-    border-radius: 50px;
-  }
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #e11d48;
+  border-radius: 50px;
+}
 
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #7878a3;
-  }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #7878a3;
+}
