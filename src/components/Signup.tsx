@@ -2,20 +2,18 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-
 import { Button } from "@/components/ui/button";
 import {
-  Form,
   FormControl,
   FormField,
   FormItem,
+  Form,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Loader from "./Loader";
 import { useToast } from "@/components/ui/use-toast";
-
 import { signupSchema } from "@/lib/validations/main";
 import {
   useCreateUserAccount,
@@ -29,6 +27,12 @@ const Signup = () => {
   const navigate = useNavigate();
   const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
 
+  const { mutateAsync: createUserAccount, isPending: isCreatingUser } =
+    useCreateUserAccount();
+
+  const { mutateAsync: signInAccount, isPending: isSigningIn } =
+    useSignInAccount();
+
   const form = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
@@ -38,12 +42,6 @@ const Signup = () => {
       password: "",
     },
   });
-
-  const { mutateAsync: createUserAccount, isPending: isCreatingUser } =
-    useCreateUserAccount();
-
-  const { mutateAsync: signInAccount, isPending: isSigningIn } =
-    useSignInAccount();
 
   async function onSubmit(values: z.infer<typeof signupSchema>) {
     try {
@@ -72,6 +70,7 @@ const Signup = () => {
       } else {
         return toast({
           title: "Sign up failed. Please try again",
+          variant: "destructive"
         });
       }
     } catch (error) {

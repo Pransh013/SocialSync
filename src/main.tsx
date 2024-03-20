@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import { ThemeProvider } from "./components/ThemeProvider.tsx";
 import "./index.css";
@@ -11,16 +10,14 @@ import { BrowserRouter } from "react-router-dom";
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
+  <BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
           <Toaster />
-          <AuthProvider>
-            <App />
-          </AuthProvider>
+          <App />
         </ThemeProvider>
-      </QueryClientProvider>
-    </BrowserRouter>
-  </React.StrictMode>
+      </AuthProvider>
+    </QueryClientProvider>
+  </BrowserRouter>
 );

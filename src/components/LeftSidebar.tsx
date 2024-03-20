@@ -8,6 +8,7 @@ import { useUserContext } from "@/contexts/AuthContext";
 import UserAvatar from "./UserAvatar";
 import { sidebarLinks } from "@/constants";
 import { Navlinks } from "@/types";
+import Loader from "./Loader";
 
 const LeftSidebar = () => {
   const navigate = useNavigate();
@@ -26,19 +27,23 @@ const LeftSidebar = () => {
         <Link to={"/"}>
           <Logo width={"w-9"} text={"text-2xl"} />
         </Link>
-        <Link to={`/profile/${user.id}`}>
-          <div className="flex items-center gap-4">
-            <UserAvatar
-              area={"w-12 h-12"}
-              fallback={user.name}
-              imageUrl={user.imageUrl}
-            />
-            <div>
-              <p className="text-lg font-semibold text-white">{user.name}</p>
-              <p className="text-sm text-[#ffffffb6]">@{user.username}</p>
+        {user.name ? (
+          <Link to={`/profile/${user.id}`}>
+            <div className="flex items-center gap-4">
+              <UserAvatar
+                area={"w-12 h-12"}
+                fallback={user.name}
+                imageUrl={user.imageUrl}
+              />
+              <div>
+                <p className="text-lg font-semibold text-white">{user.name}</p>
+                <p className="text-sm text-[#ffffffb6]">@{user.username}</p>
+              </div>
             </div>
-          </div>
-        </Link>
+          </Link>
+        ) : (
+          <Loader />
+        )}
         <div className="flex flex-col gap-4">
           {sidebarLinks.map((item: Navlinks) => {
             const isActive = location.pathname === item.route;
@@ -83,7 +88,7 @@ const LeftSidebar = () => {
           onClick={() => handleSignout()}
         >
           <p className="font-bold hidden sm:flex text-white">Logout</p>
-          <LogOut className="text-white"/>
+          <LogOut className="text-white" />
         </Button>
       </div>
     </div>

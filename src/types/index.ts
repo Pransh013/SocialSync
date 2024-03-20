@@ -37,7 +37,7 @@ export type Navlinks = {
 };
 
 export type FileUploaderProps = {
-  fieldChange: (FILES: File[]) => void;
+  fieldChange: (files: File[]) => void;
   mediaUrl: string;
 };
 
@@ -52,3 +52,7 @@ export type NewPost = {
   location?: string;
   tags?: string;
 };
+
+export type PostCardProps = {
+  post: Models.Document;
+}

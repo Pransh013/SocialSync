@@ -15,10 +15,15 @@ import FileUploader from "./FileUploader";
 import { Input } from "./ui/input";
 import { postSchema } from "@/lib/validations/main";
 import { PostProps } from "@/types";
+import { useCreatePost } from "@/lib/react-query/queriesAndMutations";
+import { useUserContext } from "@/contexts/AuthContext";
+import { toast } from "./ui/use-toast";
+import { useNavigate } from "react-router-dom";
 
 const PostForm = ({ post }: PostProps) => {
-
-  const {mutateAsync: createPost, isPending: isUploading} = useCrea 
+  const { mutateAsync: createPost } = useCreatePost();
+  const { user } = useUserContext();
+  const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof postSchema>>({
     resolver: zodResolver(postSchema),
@@ -30,8 +35,26 @@ const PostForm = ({ post }: PostProps) => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof postSchema>) {
+  async function onSubmit(values: z.infer<typeof postSchema>) {
+    const newPost = await createPost({
+      ...values,
+      userId: user.id,
+    });
 
+    if (!newPost) {
+      toast({
+        variant: "destructive",
+        title: "Please try again.",
+      });
+      return;
+    }
+
+    toast({
+      variant: "default",
+      title: "Post created successfully",
+      className: "bg-primary",
+    });
+    navigate("/");
   }
   return (
     <Form {...form}>
@@ -56,6 +79,7 @@ const PostForm = ({ post }: PostProps) => {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="file"
@@ -72,6 +96,7 @@ const PostForm = ({ post }: PostProps) => {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="location"
