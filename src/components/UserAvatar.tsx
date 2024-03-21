@@ -14,7 +14,7 @@ function UserAvatar({
   if (imageUrl.includes("appwrite")) imageUrl = "";
   if (!initials) initials = "U";
   return (
-    <Avatar className={` ${area}`}>
+    <Avatar className={`${area}`}>
       <AvatarImage src={imageUrl} alt="user" />
       <AvatarFallback className="bg-muted text-primary dark:text-white font-semibold">
         {initials}
