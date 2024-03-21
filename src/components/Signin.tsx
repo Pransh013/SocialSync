@@ -44,18 +44,20 @@ const Signin = () => {
     if (!session) {
       return toast({
         variant: "destructive",
+        className: "bg-red-700",
         title: "User not found, please sign up first",
       });
     }
 
     const isLoggedIn = await checkAuthUser();
-    console.log(isLoggedIn);
 
     if (isLoggedIn) {
       form.reset();
       navigate("/");
     } else {
       return toast({
+        variant: "destructive",
+        className: "bg-red-700",
         title: "Sign in failed. Please try again",
       });
     }

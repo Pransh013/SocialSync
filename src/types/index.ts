@@ -43,6 +43,7 @@ export type FileUploaderProps = {
 
 export type PostProps = {
   post?: Models.Document;
+  action: 'Create' | 'Update'
 };
 
 export type NewPost = {
@@ -51,6 +52,16 @@ export type NewPost = {
   file: File[];
   location?: string;
   tags?: string;
+};
+
+export type EditPost = {
+  postId: string;
+  caption: string;
+  file: File[];
+  location?: string;
+  tags?: string;
+  imageId: string;
+  imageUrl: URL
 };
 
 export type PostCardProps = {

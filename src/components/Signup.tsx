@@ -60,6 +60,8 @@ const Signup = () => {
       if (!session) {
         return toast({
           title: "Sign up failed. Please try again",
+          className: "bg-red-700",
+          variant: "destructive",
         });
       }
 
@@ -70,7 +72,8 @@ const Signup = () => {
       } else {
         return toast({
           title: "Sign up failed. Please try again",
-          variant: "destructive"
+          className: "bg-red-700",
+          variant: "destructive",
         });
       }
     } catch (error) {

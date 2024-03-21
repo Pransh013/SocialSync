@@ -15,13 +15,17 @@ import FileUploader from "./FileUploader";
 import { Input } from "./ui/input";
 import { postSchema } from "@/lib/validations/main";
 import { PostProps } from "@/types";
-import { useCreatePost } from "@/lib/react-query/queriesAndMutations";
+import {
+  useCreatePost,
+  useEditPost,
+} from "@/lib/react-query/queriesAndMutations";
 import { useUserContext } from "@/contexts/AuthContext";
 import { toast } from "./ui/use-toast";
 import { useNavigate } from "react-router-dom";
 
-const PostForm = ({ post }: PostProps) => {
-  const { mutateAsync: createPost } = useCreatePost();
+const PostForm = ({ post, action }: PostProps) => {
+  const { mutateAsync: createPost, isPending: isCreating } = useCreatePost();
+  const { mutateAsync: editPost, isPending: isUpdating } = useEditPost();
   const { user } = useUserContext();
   const navigate = useNavigate();
 
@@ -36,6 +40,28 @@ const PostForm = ({ post }: PostProps) => {
   });
 
   async function onSubmit(values: z.infer<typeof postSchema>) {
+    if (post && action === "Update") {
+      const editedPost = await editPost({
+        ...values,
+        postId: post?.$id,
+        imageId: post?.imageId,
+        imageUrl: post?.imageUrl,
+      });
+      if (!editedPost) {
+        toast({
+          variant: "destructive",
+          className: "bg-red-700",
+          title: "Please try again.",
+        });
+        return;
+      }
+      toast({
+        title: "Post updated successfully",
+        className: "bg-primary",
+      });
+      return navigate(`/posts/${post.$id}`);
+    }
+
     const newPost = await createPost({
       ...values,
       userId: user.id,
@@ -141,8 +167,12 @@ const PostForm = ({ post }: PostProps) => {
           >
             Cancel
           </Button>
-          <Button className="text-lg" type="submit">
-            Submit
+          <Button
+            className="text-lg"
+            type="submit"
+            disabled={isCreating || isUpdating}
+          >
+            {action === "Update"?"Update":"Submit"}
           </Button>
         </div>
       </form>

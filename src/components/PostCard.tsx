@@ -55,9 +55,13 @@ const PostCard = ({ post }: PostCardProps) => {
             ))}
           </ul>
         </div>
-        <img src={post?.imageUrl} className="w-5/6 mx-auto" alt="" />
+        <img
+          src={post?.imageUrl}
+          className="w-2/3 h-96 object-cover rounded-lg mx-auto"
+          alt=""
+        />
       </Link>
-      <PostStats post={post} userId={user.id}/>
+      <PostStats post={post} userId={user.id} />
     </div>
   );
 };
