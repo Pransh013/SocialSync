@@ -37,7 +37,7 @@ const PostCard = ({ post }: PostCardProps) => {
         </div>
         <Link
           to={`/update-post/${post.$id}`}
-          className={`${user.id !== post.creator.$id ? "hidded" : "flex"}`}
+          className={`${user.id !== post.creator.$id ? "hidden" : "flex"}`}
         >
           <img src={Edit} alt="" className="w-8 filter hue-rotate-[95deg]" />
         </Link>

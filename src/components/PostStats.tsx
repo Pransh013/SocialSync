@@ -63,17 +63,21 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
   };
 
   return (
-    <div className="flex justify-between items-center z-20 px-10 my-4">
+    <div className="flex justify-between items-center z-20 px-10 mt-4 h-12">
       <div className="flex gap-2 items-center">
         <img
           src={checkIsLiked(likes, userId) ? Liked : Like}
           alt=""
-          className="w-8 filter hue-rotate-[95deg] cursor-pointer"
+          className={`filter cursor-pointer ${
+            checkIsLiked(likes, userId)
+              ? "w-10 "
+              : "w-10 p-1 hue-rotate-[95deg]"
+          }`}
           onClick={handleLikes}
         />
         <p className="text-2xl">{likes.length}</p>
       </div>
-      <div className="flex gap-2 mr-5">
+      <div className="flex gap-2 mr-2">
         {isSaving || isDeleting ? (
           <Loader />
         ) : (

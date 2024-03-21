@@ -22,6 +22,7 @@ import {
 import { useUserContext } from "@/contexts/AuthContext";
 import { toast } from "./ui/use-toast";
 import { useNavigate } from "react-router-dom";
+import Loader from "./Loader";
 
 const PostForm = ({ post, action }: PostProps) => {
   const { mutateAsync: createPost, isPending: isCreating } = useCreatePost();
@@ -35,7 +36,7 @@ const PostForm = ({ post, action }: PostProps) => {
       caption: post ? post.caption : "",
       file: [],
       location: post ? post.location : "",
-      tags: post ? post.tags.join(", ") : "",
+      tags: post ? post.tags.join(",") : "",
     },
   });
 
@@ -164,16 +165,23 @@ const PostForm = ({ post, action }: PostProps) => {
           <Button
             className="bg-muted text-secondary-foreground dark:bg-popover text-lg dark:hover:bg-muted hover:bg-[#b9b6b6]"
             type="button"
+            disabled={isCreating || isUpdating}
           >
             Cancel
           </Button>
-          <Button
-            className="text-lg"
-            type="submit"
-            disabled={isCreating || isUpdating}
-          >
-            {action === "Update"?"Update":"Submit"}
-          </Button>
+          {isCreating || isUpdating ? (
+            <Button className="px-7" disabled={isCreating || isUpdating}>
+              <Loader />
+            </Button>
+          ) : (
+            <Button
+              className="text-lg"
+              type="submit"
+              disabled={isCreating || isUpdating}
+            >
+              {action === "Update" ? "Update" : "Submit"}
+            </Button>
+          )}
         </div>
       </form>
     </Form>
