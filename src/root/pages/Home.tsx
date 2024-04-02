@@ -3,11 +3,7 @@ import PostCard from "@/components/PostCard";
 import { useGetRecentPosts } from "@/lib/react-query/queriesAndMutations";
 
 const Home = () => {
-  const {
-    data: posts,
-    isPending: isLoading,
-    isError: isError,
-  } = useGetRecentPosts();
+  const { data: posts, isPending: isLoading } = useGetRecentPosts();
   return (
     <>
       <div className="flex flex-1">
