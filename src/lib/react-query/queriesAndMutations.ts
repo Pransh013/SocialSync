@@ -1,6 +1,5 @@
 import { EditPost, NewPost, NewUser, SignInUser } from "@/types";
 import {
-  useInfiniteQuery,
   useMutation,
   useQuery,
   useQueryClient,
