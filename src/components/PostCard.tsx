@@ -18,11 +18,11 @@ const PostCard = ({ post }: PostCardProps) => {
             <UserAvatar
               fallback={post?.creator?.name}
               imageUrl={post?.creator?.imageUrl}
-              area={"w-14 h-14 filter invert"}
+              area={"w-12 h-12 lg:w-14 lg:h-14 filter invert"}
             />
           </Link>
           <div className="fle flex-col">
-            <p className="text-[19px] font-semibold leading-[140%] tracking-wide text-white">
+            <p className="text-base lg:text-[19px] font-semibold leading-[140%] tracking-wide text-white">
               {post.creator.name}
             </p>
             <div className="flex justify-center items-center gap-2">
@@ -44,12 +44,12 @@ const PostCard = ({ post }: PostCardProps) => {
       </div>
       <Link to={`/posts/${post?.$id}`}>
         <div className="py-5">
-          <p className="font-semibold text-[18px] text-gray-100">
+          <p className="font-semibold text-base lg:text-[18px] text-gray-100">
             {post?.caption}
           </p>
-          <ul className="flex gap-1 mt-2">
+          <ul className="flex gap-1 mt-1 lg:mt-2">
             {post?.tags.map((tag: string) => (
-              <li className="text-[13px] text-gray-400 font-medium" key={tag}>
+              <li className="text-[11px] lg:text-[13px] text-gray-400 font-medium" key={tag}>
                 #{tag}
               </li>
             ))}
@@ -57,7 +57,7 @@ const PostCard = ({ post }: PostCardProps) => {
         </div>
         <img
           src={post?.imageUrl}
-          className="w-2/3 h-96 object-cover rounded-lg mx-auto"
+          className="w-full lg:w-2/3 h-96 object-cover rounded-lg mx-auto"
           alt=""
         />
       </Link>

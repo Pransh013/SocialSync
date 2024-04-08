@@ -1,6 +1,10 @@
+import Explore from "./Explore"
+
 const Saved = () => {
   return (
-    <div>Saved</div>
+    <>
+      <Explore/>
+    </>
   )
 }
 

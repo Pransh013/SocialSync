@@ -1,6 +1,10 @@
+import UserAvatar from "@/components/UserAvatar"
+
 const AllUsers = () => {
   return (
-    <div>AllUsers</div>
+    <div className="w-full h-full ">
+      Users
+    </div>
   )
 }
 

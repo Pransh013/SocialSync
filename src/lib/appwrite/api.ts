@@ -266,7 +266,7 @@ export const editPost = async (post: EditPost) => {
         throw Error;
       }
 
-      image = {...image, imageUrl:fileUrl, imageId: uploadedFile.$id};
+      image = { ...image, imageUrl: fileUrl, imageId: uploadedFile.$id };
     }
 
     const tags = post.tags?.replace(/ /g, "").split(",") || [];
@@ -295,19 +295,60 @@ export const editPost = async (post: EditPost) => {
   }
 };
 
-export const deletePost = async (postId:string, imageId:string) => {
-  if(!postId || !imageId) throw Error;
+export const deletePost = async (postId: string, imageId: string) => {
+  if (!postId || !imageId) throw Error;
 
   try {
     await databases.deleteDocument(
       appwriteConfig.databaseId,
       appwriteConfig.postCollectionId,
       postId
-    )
+    );
 
-    return {status: 'success'};
+    return { status: "success" };
   } catch (error) {
     console.log(error);
-    
   }
-} 
+};
+
+export const getInfinitePosts = async ({
+  pageParam,
+}: {
+  pageParam: number;
+}) => {
+  const queries = [Query.orderDesc("$updatedAt"), Query.limit(10)];
+
+  if (pageParam) {
+    queries.push(Query.cursorAfter(pageParam.toString()));
+  }
+
+  try {
+    const posts = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.postCollectionId,
+      queries
+    );
+    if (!posts) {
+      throw Error;
+    }
+    return posts;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const searchPosts = async (searchText: string) => {
+  try {
+    const posts = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.postCollectionId,
+      [Query.search("caption", searchText)]
+    );
+    if (!posts) {
+      throw Error;
+    }
+    return posts;
+  } catch (error) {
+    console.log(error);
+  }
+};
